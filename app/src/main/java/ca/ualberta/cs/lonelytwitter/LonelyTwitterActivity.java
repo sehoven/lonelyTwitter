@@ -39,8 +39,25 @@ public class LonelyTwitterActivity extends Activity {
 			public void onClick(View v) {
 				setResult(RESULT_OK);
 				String text = bodyText.getText().toString();
+
+				Tweet newTweet = new NormalTweet( text );
+				try {
+					newTweet.setMessage( "This is a tweet" );
+				} catch ( TweetTooLongException e ) {
+					e.printStackTrace();
+				}
+				ImportantTweet newestImportantTweet = new ImportantTweet( text );
+				newestImportantTweet.getMessage();
+				newestImportantTweet.isImportant();
+
+				String test = newtweet.getMessage();
+
+				ArrayList<Tweet> tweetList = new ArrayList<Tweet>();
+				tweetList.add( newTweet );
+				tweetList.add( newestImportantTweet );
+
 				saveInFile(text, new Date(System.currentTimeMillis()));
-				finish();
+				finish(); // closing the app
 
 			}
 		});
@@ -50,7 +67,7 @@ public class LonelyTwitterActivity extends Activity {
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		String[] tweets = loadFromFile();
+		String[] tweets = loadFromFile(); // everytime you open it it loads the file
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				R.layout.list_item, tweets);
 		oldTweetsList.setAdapter(adapter);
