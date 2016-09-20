@@ -14,6 +14,7 @@ public abstract class Tweet {
 
     public Tweet ( String message ) { // will be called if we only pass in a string
         this.message = message;
+        this.date = new Date();
         this.moods = new ArrayList<Mood>();
     }
 
@@ -50,5 +51,10 @@ public abstract class Tweet {
 
     public ArrayList<Mood> getMoods() {
         return moods;
+    }
+
+    @Override
+    public String toString(){
+        return date.toString() + " | " + message;
     }
 }
