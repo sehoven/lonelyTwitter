@@ -20,8 +20,6 @@ public class NormalTweet extends Tweet implements Tweetable {
         if(!(another instanceof Tweet)) {
             throw new ClassCastException("A Tweet object expected");
         }
-        long tweetTime = (((Tweet) another).getDate()).getTime();
-        long difference = tweetTime - this.getDate().getTime();
-        return (int)difference;
+        return ((Tweet) another).getDate().compareTo(this.getDate());
     }
 }
