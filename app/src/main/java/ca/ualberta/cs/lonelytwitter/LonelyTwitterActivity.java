@@ -54,7 +54,7 @@ public class LonelyTwitterActivity extends Activity {
 				setResult(RESULT_OK);
 				String text = bodyText.getText().toString();
 
-				Tweet newTweet = new NormalTweet( text );
+				Tweet newTweet = new NormalTweet( text, new Date() );
 
 				tweetList.add(newTweet);
 				adapter.notifyDataSetChanged();

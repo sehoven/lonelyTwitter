@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by shoven on 2016-09-13.
  */
-public abstract class Tweet {
+public abstract class Tweet implements Comparable {
     // attributes for our tweet
     private String message;
     private Date date;
