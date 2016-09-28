@@ -77,7 +77,6 @@ public class LonelyTwitterActivity extends Activity {
 
 	@Override
 	protected void onStart() {
-		// TODO Auto-generated method stub
 		super.onStart();
 		loadFromFile();
 		adapter = new ArrayAdapter<Tweet>(this,
@@ -97,11 +96,8 @@ public class LonelyTwitterActivity extends Activity {
 
 			tweetList = gson.fromJson(in, listType);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			// Create a brand new tweet list if we can't find the file.
 			tweetList = new ArrayList<Tweet>();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			throw new RuntimeException();
 		}
 	}
 	
@@ -118,16 +114,16 @@ public class LonelyTwitterActivity extends Activity {
 
 			fos.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			throw new RuntimeException();
+			// rethrow
+			throw new RuntimeException(e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			throw new RuntimeException();
+			// rethrow
+			throw new RuntimeException(e);
 		}
 	}
 
 	private void clearScreen() {
-		adapter.clear();
+		tweetList.clear();
 		adapter.notifyDataSetChanged();
 	}
 
