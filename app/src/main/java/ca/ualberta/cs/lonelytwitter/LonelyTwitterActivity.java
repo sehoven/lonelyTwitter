@@ -1,3 +1,12 @@
+/*
+(THIS IS JUST AN EXAMPLE - to develop in our own team)
+Copyright (c) 2016 Team 20, CMPUT301, University of Alberta - All Rights Reserved
+You may use, distribute, and copy all or parts of this code under terms and conditions of
+University of Alberta and the Code of Student Behaviour.
+You can find a copy of the licence at http://www.github.com/Team20/...
+For further information, contact me@domain.ca
+ */
+
 package ca.ualberta.cs.lonelytwitter;
 
 import java.io.BufferedReader;
@@ -9,7 +18,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,7 +25,6 @@ import java.util.Date;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,17 +34,47 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * This is the main view class of the lonelyTwitter project. <p>It handles all
+ * user interactions as well as file manipulations.</p>
+ * <pre> All the files are stores in the form of "json" files stored in Emulator,
+ * accessible from Android Device Monitor. </pre>
+ * <code> Pseudo code sample:
+ * <br>open some file ...
+ * <br>attach some text ...
+ * <br>close the file.
+ * </code>
+ * <ul>
+ *     <li>an item</li>
+ *     <li>another item</li>
+ *     <li>and another item</li>
+ *     <li>yet another item</li>
+ * </ul>
+ * <ol>
+ *     <li>an item</li>
+ *     <li>another item</li>
+ *     <li>and another item</li>
+ *     <li>yet another item</li>
+ * </ol>
+ * @since 1.0
+ * @see NormalTweet
+ * @see java.io.FileNotFoundException
+ * @author Sarah
+ * @deprecated
+ */
 public class LonelyTwitterActivity extends Activity {
 
+	/**
+	 * This is the file name that is being saved / loaded and contains all the tweets.
+	 * @see #saveInFile()
+	 * @see #loadFromFile()
+	 */
 	private static final String FILENAME = "file.sav";
 	private EditText bodyText;
 	private ListView oldTweetsList;
-
 	private	ArrayList<Tweet> tweetList = new ArrayList<Tweet>();
-
 	private ArrayAdapter<Tweet> adapter;
 
-	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -84,6 +121,12 @@ public class LonelyTwitterActivity extends Activity {
 		oldTweetsList.setAdapter(adapter);
 	}
 
+	/**
+	 * This method loads the tweets rom FILE_NAME (file.sav), and ...
+	 * @throws FileNotFoundException
+	 * @exception RuntimeException
+	 */
+	// explain behaviour, input, output, parameters
 	private void loadFromFile() {
 		try {
 			FileInputStream fis = openFileInput(FILENAME);
