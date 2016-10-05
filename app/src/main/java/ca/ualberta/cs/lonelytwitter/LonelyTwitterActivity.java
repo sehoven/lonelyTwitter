@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,7 +16,6 @@ import java.util.Date;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,17 +25,46 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * This is the main view class of the lonelyTwitter project.
+ * <p>It handles all user interactions, which includes saving and
+ * clearing the data, displaying the data, and file manipulations.</p>
+ */
 public class LonelyTwitterActivity extends Activity {
 
-	private static final String FILENAME = "file.sav";
+	/**
+	 * This is the file name that is being saved / loaded and contains all the tweets.
+	 * @see #saveInFile()
+	 * @see #loadFromFile()
+	 */
+	private static final String FILE_NAME = "file.sav";
+	/**
+	 * This is the text box where the user enters the new tweets to be added.
+	 */
 	private EditText bodyText;
+	/**
+	 * This is where the previously entered tweets are displayed.
+	 */
 	private ListView oldTweetsList;
-
+	/**
+	 * This is where all the tweets that are created by the user are stored.
+	 */
 	private	ArrayList<Tweet> tweetList = new ArrayList<Tweet>();
-
+	/**
+	 * This is the array adapter that handles the list of all the tweets.
+	 */
 	private ArrayAdapter<Tweet> adapter;
 
-	/** Called when the activity is first created. */
+	/**
+	 * This method is called every time the activity is created during the
+	 * lifetime of the app.
+	 * <p>This method initializes the text save and clear buttons, as well as
+	 * the views for the main content and tweet list and the edit text box where
+	 * new tweets are entered.</p>
+	 * <p>All the files are stored as "json" files in the Emulator, which are
+	 * accessible from Android Device Monitor.</p>
+	 * @param savedInstanceState
+     */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,32 +76,33 @@ public class LonelyTwitterActivity extends Activity {
 		Button clearButton = (Button) findViewById(R.id.clear);
 
 		saveButton.setOnClickListener(new View.OnClickListener() {
-
 			public void onClick(View v) {
 				setResult(RESULT_OK);
 				String text = bodyText.getText().toString();
-
 				Tweet newTweet = new NormalTweet( text, new Date() );
 
 				tweetList.add(newTweet);
 				adapter.notifyDataSetChanged();
-
 				saveInFile();
 				bodyText.setText(null);
 			}
 		});
 
 		clearButton.setOnClickListener(new View.OnClickListener() {
-
 			public void onClick(View v) {
 				setResult(RESULT_OK);
-
 				clearScreen();
 				clearData();
 			}
 		});
 	}
 
+	/**
+	 * This method is called every time the activity is started during
+	 * the lifetime of the app.
+	 * <p>This method sets the array adapter for the tweet list view and
+	 * loads all app data that is stored in memory.</p>
+	 */
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -84,13 +112,18 @@ public class LonelyTwitterActivity extends Activity {
 		oldTweetsList.setAdapter(adapter);
 	}
 
+	/**
+	 * This method loads the tweets from FILE_NAME (file.sav).
+	 * <p>All the files are stored as "json" files in the Emulator, which are
+	 * accessible from Android Device Monitor.</p>
+	 * <p>If the file cannot be found, the tweet list is initialized to an
+	 * empty tweet list</p>
+	 */
 	private void loadFromFile() {
 		try {
-			FileInputStream fis = openFileInput(FILENAME);
+			FileInputStream fis = openFileInput(FILE_NAME);
 			BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-
 			Gson gson = new Gson();
-
 			// code from http://stackoverflow.com/questions/12384064/gson-convert-from-json-to-a-typed-arraylistt
 			Type listType = new TypeToken<ArrayList<NormalTweet>>(){}.getType();
 
@@ -100,18 +133,21 @@ public class LonelyTwitterActivity extends Activity {
 			tweetList = new ArrayList<Tweet>();
 		}
 	}
-	
+
+	/**
+	 * This method saves the tweets to FILE_NAME (file.sav).
+	 * <p>All the files are stored as "json" files in the Emulator, which are
+	 * accessible from Android Device Monitor.</p>
+	 * @throws RuntimeException
+	 */
 	private void saveInFile() {
 		try {
-			FileOutputStream fos = openFileOutput(FILENAME,
+			FileOutputStream fos = openFileOutput(FILE_NAME,
 					Context.MODE_PRIVATE);
-
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
-
 			Gson gson = new Gson();
 			gson.toJson(tweetList, out);
 			out.flush();
-
 			fos.close();
 		} catch (FileNotFoundException e) {
 			// rethrow
@@ -122,14 +158,22 @@ public class LonelyTwitterActivity extends Activity {
 		}
 	}
 
+	/**
+	 * This method clears the screen of all tweets.
+	 */
 	private void clearScreen() {
 		tweetList.clear();
 		adapter.notifyDataSetChanged();
 	}
 
+	/**
+	 * This method clears all app data from the device memory by deleting
+	 * the FILE_NAME (file.sav) file.
+	 * @throws RuntimeException
+	 */
 	private void clearData() {
 		File dir = getFilesDir();
-		File file = new File(dir, FILENAME);
+		File file = new File(dir, FILE_NAME);
 		try {
 			boolean deleted = file.delete();
 		} catch (SecurityException e) {

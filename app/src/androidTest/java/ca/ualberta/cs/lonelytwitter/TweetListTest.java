@@ -6,15 +6,20 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * Created by shoven on 2016-09-27.
+ * Tests the tweet list
  */
-
 public class TweetListTest extends ActivityInstrumentationTestCase2<LonelyTwitterActivity> {
 
+    /**
+     * Instantiates a new Tweet list test.
+     */
     public TweetListTest() {
         super(LonelyTwitterActivity.class);
     }
 
+    /**
+     * Test adding a tweet with a message string and date parameter.
+     */
     public void testAddTweet() {
         TweetList list = new TweetList();
 
@@ -28,6 +33,9 @@ public class TweetListTest extends ActivityInstrumentationTestCase2<LonelyTwitte
         }
     }
 
+    /**
+     * Test if the tweet list has a tweet.
+     */
     public void testHasTweet() {
         TweetList list = new TweetList();
 
@@ -37,6 +45,9 @@ public class TweetListTest extends ActivityInstrumentationTestCase2<LonelyTwitte
         assertTrue(list.hasTweet(a));
     }
 
+    /**
+     * Test that the tweets are entered into the array by retrieving them.
+     */
     public void testGetTweet() {
         TweetList list = new TweetList();
 
@@ -50,6 +61,9 @@ public class TweetListTest extends ActivityInstrumentationTestCase2<LonelyTwitte
         assertEquals(b, list.getTweet(1));
     }
 
+    /**
+     * Test removing a tweet from the tweet list.
+     */
     public void testRemoveTweet() {
         TweetList list = new TweetList();
 
@@ -61,6 +75,10 @@ public class TweetListTest extends ActivityInstrumentationTestCase2<LonelyTwitte
         assertFalse(list.hasTweet(a));
     }
 
+    /**
+     * Test getting the tweets in chronological order, regardless of the
+     * order they were added.
+     */
     public void testGetTweets() {
         TweetList list = new TweetList();
 
@@ -85,6 +103,9 @@ public class TweetListTest extends ActivityInstrumentationTestCase2<LonelyTwitte
         assertEquals(b, list.getTweets().get(0));
     }
 
+    /**
+     * Test counting the tweets in the tweet list.
+     */
     public void testCountTweets() {
         TweetList list = new TweetList();
         assertTrue(list.getCount().equals(0));

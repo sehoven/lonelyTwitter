@@ -6,14 +6,22 @@ import android.test.ActivityInstrumentationTestCase2;
 import junit.framework.TestCase;
 
 /**
- * Created by wz on 14/09/15.
+ * Tests the LonelyTwitterActivity start
  */
 public class LonelyTwitterActivityTest extends ActivityInstrumentationTestCase2 {
 
+    /**
+     * Instantiates a new Lonely twitter activity test
+     */
     public LonelyTwitterActivityTest() {
         super(ca.ualberta.cs.lonelytwitter.LonelyTwitterActivity.class);
     }
 
+    /**
+     * Tests starting the LonelyTwitterActivity
+     *
+     * @throws Exception
+     */
     public void testStart() throws Exception {
         Activity activity = getActivity();
 
