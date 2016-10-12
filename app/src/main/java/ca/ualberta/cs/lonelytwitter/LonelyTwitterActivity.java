@@ -15,8 +15,10 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +33,8 @@ import com.google.gson.reflect.TypeToken;
  * clearing the data, displaying the data, and file manipulations.</p>
  */
 public class LonelyTwitterActivity extends Activity {
+
+	private Activity activity = this;
 
 	/**
 	 * This is the file name that is being saved / loaded and contains all the tweets.
@@ -95,6 +99,17 @@ public class LonelyTwitterActivity extends Activity {
 				clearData();
 			}
 		});
+
+		oldTweetsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+									int position, long id) {
+				Intent intent = new Intent(activity, EditTweetActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putString("tweet", tweetList.get(position).getMessage());
+				intent.putExtras(bundle);
+				startActivity(intent);
+			}
+		});
 	}
 
 	/**
@@ -110,6 +125,10 @@ public class LonelyTwitterActivity extends Activity {
 		adapter = new ArrayAdapter<Tweet>(this,
 				R.layout.list_item, tweetList);
 		oldTweetsList.setAdapter(adapter);
+	}
+
+	public ListView getOldTweetsList() {
+		return oldTweetsList;
 	}
 
 	/**
