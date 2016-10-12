@@ -106,4 +106,9 @@ public class LonelyTwitterActivityTest extends ActivityInstrumentationTestCase2<
 
         solo.assertCurrentActivity("Wrong Activity", LonelyTwitterActivity.class);
     }
+
+    @Override
+    public void tearDown() throws Exception {
+        solo.finishOpenedActivities();
+    }
 }
