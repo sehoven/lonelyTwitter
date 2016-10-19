@@ -3,11 +3,15 @@ package ca.ualberta.cs.lonelytwitter;
 import java.util.ArrayList;
 import java.util.Date;
 
+import io.searchbox.annotations.JestId;
+
 /**
  * The type Tweet that contains the message, date, and mood array for each tweet
  * entered by the user.
  */
 public abstract class Tweet implements Comparable {
+    @JestId
+    private String id;
     private String message;
     private Date date;
     private ArrayList<Mood> moods;
@@ -98,10 +102,18 @@ public abstract class Tweet implements Comparable {
     /**
      * Gets mood array of the tweet.
      *
-     * @return the mood arry
+     * @return the mood array
      */
     public ArrayList<Mood> getMoods() {
         return moods;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
@@ -111,6 +123,10 @@ public abstract class Tweet implements Comparable {
      */
     @Override
     public String toString(){
-        return date.toString() + " | " + message;
+        if (date != null && message != null) {
+            return date.toString() + " | " + message;
+        } else {
+            return "";
+        }
     }
 }
